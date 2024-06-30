@@ -1,4 +1,4 @@
-# Python-App-Countdown
+# AppTimeCounter
 
 A lightweight and efficient application for tracking the countdown of your selected applications in the background. This project is designed to be simple, with a single-file codebase for easy deployment and use.
 
@@ -25,8 +25,8 @@ Check out this [example video](https://github.com/FalconHH/Python-App-Countdown/
 
 1. **Clone the repository**:
     ```bash
-    git clone https://github.com/FalconHH/Python-App-Countdown.git
-    cd Python-App-Countdown
+    git clone https://github.com/FalconHH/AppTimeCounter.git
+    cd AppTimeCounter
     ```
 
 2. **Install the required packages**:
@@ -36,7 +36,7 @@ Check out this [example video](https://github.com/FalconHH/Python-App-Countdown/
 
 3. **Run the application**:
     ```bash
-    python app_countdown.py
+    python main.py
     ```
 
 ## Contributing
