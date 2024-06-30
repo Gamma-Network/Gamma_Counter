@@ -46,5 +46,6 @@ Contributions are welcome! Feel free to fork the repository and submit pull requ
 ## Legal Note
 
 This code is open for improvements and personal usage. Any contributions that enhance functionality are highly encouraged.
-
+<p align="center">
 <img src="https://ziadoua.github.io/m3-Markdown-Badges/badges/LicenceCCBYNCND/licenceccbyncnd1.svg">
+</p>
