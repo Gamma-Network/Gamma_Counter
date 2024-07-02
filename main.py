@@ -54,6 +54,12 @@ def track_program_usage():
                     if not countdown_label.winfo_viewable():
                         countdown_label.pack()
                 else:
+                    messagebox.showwarning("Warning", f"The program '{tracked_program['name']}' has ended or closed.")
+                    tracked_program = None
+                    countdown_label.configure(text="Countdown: --:--:--")
+                    program_label.configure(text="Countdown Program: ")
+                    select_button.configure(state="normal")
+                    remove_button.configure(state="disabled")
                     if program_label.winfo_viewable():
                         program_label.pack_forget()
                     if countdown_label.winfo_viewable():
