@@ -6,11 +6,22 @@ import threading
 import os
 from tkinter import filedialog, messagebox
 from PIL import Image, ImageTk
+import PIL.Image
+import os
 
 local_app_data = os.getenv('LOCALAPPDATA')
 if not local_app_data:
     messagebox.showerror("Error", "Unable to retrieve local app data directory.")
     exit()
+    
+runtime_dir = os.path.dirname(__file__)
+sun_path = os.path.join(runtime_dir, "sun.png")
+sun_image = PIL.Image.open(sun_path)
+moon_path = os.path.join(runtime_dir, "moon.png")
+moon_image = PIL.Image.open(moon_path)
+ico_path = os.path.join(runtime_dir, "3232.ico")
+ico_image = PIL.Image.open(ico_path)
+ico_image.save(ico_path) 
 
 db_path = os.path.join(local_app_data, 'time_tracker.db')
 ctk.set_appearance_mode("System")
@@ -96,6 +107,8 @@ def select_program():
         remove_button.configure(state="normal")
         c.execute("INSERT OR IGNORE INTO time_tracking (program_name, total_duration) VALUES (?, ?)", (program_name, 0.0))
         conn.commit()
+
+        # Pack labels when a program is selected
         program_label.pack()
         countdown_label.pack()
         current_session_label.pack()
@@ -123,10 +136,10 @@ def toggle_mode():
     current_mode = ctk.get_appearance_mode()
     if current_mode == "Dark":
         ctk.set_appearance_mode("Light")
-        mode_button.configure(image=moon_image)
+        mode_button.configure(image=moon_photo_image)
     else:
         ctk.set_appearance_mode("Dark")
-        mode_button.configure(image=sun_image)
+        mode_button.configure(image=sun_photo_image)
 
 def view_countdowns():
     def delete_all_countdowns():
@@ -137,16 +150,17 @@ def view_countdowns():
                 widget.destroy()
             messagebox.showinfo("Info", "All countdowns have been deleted.")
             top.destroy()
+
     c.execute("SELECT * FROM time_tracking ORDER BY total_duration DESC")
     results = c.fetchall()
     if not results:
         messagebox.showinfo("Info", "No countdowns tracked yet.")
         return
-
     top = ctk.CTk()
     top.title("All Countdowns")
     top.geometry("300x400")
     top.resizable(False, False)
+    top.iconbitmap(ico_path)
     delete_button = ctk.CTkButton(top, text="Delete All Countdowns", command=delete_all_countdowns)
     if tracked_program:
         delete_button.configure(state="disabled")
@@ -167,6 +181,7 @@ app = ctk.CTk()
 app.title("Gamma Countdown")
 app.geometry("300x300")
 app.resizable(False, False)
+app.iconbitmap(ico_path)
 select_button = ctk.CTkButton(app, text="Start Countdown", command=select_program)
 select_button.pack(pady=10)
 remove_button = ctk.CTkButton(app, text="Stop Countdown", command=stop_program, state="disabled")
@@ -176,10 +191,12 @@ view_button.pack(pady=10)
 program_label = ctk.CTkLabel(app, text="Countdown Program: ")
 countdown_label = ctk.CTkLabel(app, text="Countdown: --:--:--")
 current_session_label = ctk.CTkLabel(app, text="Current Session: --:--:--")
-sun_image = ImageTk.PhotoImage(Image.open("sun.png").resize((20, 20)))
-moon_image = ImageTk.PhotoImage(Image.open("moon.png").resize((20, 20)))
-mode_button = ctk.CTkButton(app, image=sun_image, command=toggle_mode, width=35, height=35, text="")
-mode_button.place(x=10, y=10, anchor="nw")
+sun_image_resized = sun_image.resize((20, 20))
+moon_image_resized = moon_image.resize((20, 20))
+sun_photo_image = ImageTk.PhotoImage(sun_image_resized)
+moon_photo_image = ImageTk.PhotoImage(moon_image_resized)
+mode_button = ctk.CTkButton(app, image=sun_photo_image, command=toggle_mode, width=35, height=35, text="")
+mode_button.place(x=10, y=10, anchor="nw")  # Position at top-left corner
 tracking_thread = threading.Thread(target=track_program_usage, daemon=True)
 tracking_thread.start()
 app.mainloop()
