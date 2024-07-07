@@ -1,4 +1,4 @@
-# AppTimeCounter
+# Gamma Counter
 
 A lightweight and efficient application for tracking the countdown of your selected applications in the background. This project is designed to be simple, with a single-file codebase for easy deployment and use.
 
