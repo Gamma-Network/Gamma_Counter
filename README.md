@@ -25,7 +25,7 @@ Check out this [example video](https://github.com/FalconHH/Python-App-Countdown/
 
 1. **Clone the repository**:
     ```bash
-    git clone https://github.com/FalconHH/AppTimeCounter.git
+    git clone https://github.com/Gamma-Network/Gamma_Counter.git
     cd AppTimeCounter
     ```
 
